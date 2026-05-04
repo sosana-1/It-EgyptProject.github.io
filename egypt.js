@@ -1,116 +1,5 @@
-/*function inputAvatar(input) {
-  var reader = new FileReader();
-  reader.onload = function (e) {
-    var img = document.getElementById("avatar-img");
-    var initials = document.getElementById("avatar-initials");
-    img.src = e.target.result;
-    img.style.display = "inline";
-    initials.style.display = "none";
-  };
-  reader.readAsDataURL(input.files[0]);
-}
-
-function showEdit() {
-  document.getElementById("view-info").classList.add("hidden");
-  document.getElementById("edit-info").classList.remove("hidden");
-}
-
-function saveInfo() {
-  document.getElementById("full-name").textContent =
-    document.getElementById("e-name").value;
-  document.getElementById("email").textContent =
-    document.getElementById("e-email").value;
-  document.getElementById("gender").textContent =
-    document.getElementById("e-gender").value;
-  document.getElementById("nationality").textContent =
-    document.getElementById("e-nationality").value;
-  document.getElementById("dob").textContent =
-    document.getElementById("e-dob").value;
-  document.getElementById("view-info").classList.remove("hidden");
-  document.getElementById("edit-info").classList.add("hidden");
-}
-
-
-
-
-
-const searchInput = document.getElementById("tableSearch");
-
-    searchInput.addEventListener("keyup", function () {
-      const filter = searchInput.value.toLowerCase();
-      const table = document.getElementById("ticketsTable");
-      const cells = table.getElementsByTagName("td");
-
-      if (filter === "") {
-        for (let cell of cells) {
-          cell.style.backgroundColor = "";
-          cell.style.opacity = "1";
-        }
-        return;
-      }
-
-      for (let cell of cells) {
-        const text = cell.textContent.toLowerCase();
-        if (text.includes(filter)) {
-          cell.style.backgroundColor = "rgba(234, 205, 118, 0.4)";
-          cell.style.opacity = "1";
-        } else {
-          cell.style.backgroundColor = "";
-          cell.style.opacity = "0.3";
-        }
-      }
-    });
-    function changeCount(button, amount) {
-      const container = button.parentElement;
-      const countSpan = container.querySelector(".count");
-
-      let currentCount = parseInt(countSpan.innerText) || 0;
-      currentCount += amount;
-
-      if (currentCount < 0) {
-        currentCount = 0;
-      }
-
-      countSpan.innerText = currentCount;
-    }
-
-
-
-
-
-
-     function doLogin() {
-    document.getElementById('loginBox').style.display = 'flex';
-}
-
-function doSignup() {
-    document.getElementById('signupBox').style.display = 'flex';
-}
-
-function closeAll() {
-    document.getElementById('loginBox').style.display = 'none';
-    document.getElementById('signupBox').style.display = 'none';
-}
-
-// إغلاق عند الضغط خارج الصندوق
-window.onclick = function(event) {
-    if (event.target.className === 'popup-overlay') {
-        closeAll();
-    }
-}
-
-
-
-
-
-
-
-
-
-
-/* ===== DARK / LIGHT MODE TOGGLE ===== 
+/* DARK / LIGHT MODE TOGGLE */
 (function () {
-  // Inject the toggle button into every page
   function injectToggle() {
     var btn = document.createElement("button");
     btn.id = "theme-toggle";
@@ -124,61 +13,6 @@ window.onclick = function(event) {
       var current = localStorage.getItem("misr-theme") || "dark";
       var next = current === "dark" ? "light" : "dark";
       localStorage.setItem("misr-theme", next);
-      applyTheme(next, btn);
-    });
-
-    document.body.appendChild(btn);
-  }
-
-  function applyTheme(theme, btn) {
-    if (theme === "light") {
-      document.body.classList.add("light-mode");
-      btn.textContent = "🌙"; // click to go dark
-      btn.title = "Switch to dark mode";
-    } else {
-      document.body.classList.remove("light-mode");
-      btn.textContent = "☀️"; // click to go light
-      btn.title = "Switch to light mode";
-    }
-  }
-
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", injectToggle);
-  } else {
-    injectToggle();
-  }
-})();
-*/
-
-
-
-
-
-
-
-/* =====================================================================
-   egypt.js  –  MISR LEGACY  –  Single unified script
-   Covers: Auth, Profile, Tickets, Search, Theme Toggle
-   Storage: localStorage  (Read & Write)
-   ===================================================================== */
-
-/* ───────────────────────────────────────────────
-   1. DARK / LIGHT MODE TOGGLE
-─────────────────────────────────────────────── */
-(function () {
-  function injectToggle() {
-    var btn = document.createElement("button");
-    btn.id = "theme-toggle";
-    btn.title = "Toggle dark / light mode";
-    btn.setAttribute("aria-label", "Toggle dark / light mode");
-
-    var saved = localStorage.getItem("misr-theme") || "dark";
-    applyTheme(saved, btn);
-
-    btn.addEventListener("click", function () {
-      var current = localStorage.getItem("misr-theme") || "dark";
-      var next = current === "dark" ? "light" : "dark";
-      localStorage.setItem("misr-theme", next);   // WRITE to storage
       applyTheme(next, btn);
     });
 
@@ -206,81 +40,28 @@ window.onclick = function(event) {
 
 
 
-/*(function () {
-  function injectToggle() {
-    var btn = document.createElement("button");
-    btn.id = "theme-toggle";
-    btn.title = "Toggle dark / light mode";
-    btn.setAttribute("aria-label", "Toggle dark / light mode");
-    
-    // إضافة الدائرة اللي هتتحرك جوه الزرار
-    btn.innerHTML = '<span class="toggle-thumb"></span>';
-
-    var saved = localStorage.getItem("misr-theme") || "dark";
-    applyTheme(saved, btn);
-
-    btn.addEventListener("click", function () {
-      var current = localStorage.getItem("misr-theme") || "dark";
-      var next = current === "dark" ? "light" : "dark";
-      localStorage.setItem("misr-theme", next);
-      applyTheme(next, btn);
-    });
-
-    document.body.appendChild(btn);
-  }
-
-  function applyTheme(theme, btn) {
-    if (theme === "light") {
-      document.body.classList.add("light-mode");
-      btn.classList.add("active"); // عشان يحرك الدائرة لليمين
-      btn.title = "Switch to dark mode";
-    } else {
-      document.body.classList.remove("light-mode");
-      btn.classList.remove("active"); // يرجع الدائرة للشمال
-      btn.title = "Switch to light mode";
-    }
-  }
-
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", injectToggle);
-  } else {
-    injectToggle();
-  }
-})();*/
 
 
-
-
-
-
-/* ───────────────────────────────────────────────
-   2. AUTH  –  Sign Up / Login / Logout
-   Storage keys:
-     misr-users  → JSON array of {username, password, name}
-     misr-current → username of logged-in user
-─────────────────────────────────────────────── */
-
-// ── helpers ──────────────────────────────────
 function getUsers() {
-  return JSON.parse(localStorage.getItem("misr-users") || "[]");  // READ
+  return JSON.parse(localStorage.getItem("misr-users") || "[]");
 }
 function saveUsers(arr) {
-  localStorage.setItem("misr-users", JSON.stringify(arr));        // WRITE
+  localStorage.setItem("misr-users", JSON.stringify(arr));
 }
 function getCurrentUser() {
-  var u = localStorage.getItem("misr-current");                   // READ
+  var u = localStorage.getItem("misr-current");
   if (!u) return null;
   return getUsers().find(function (x) { return x.username === u; }) || null;
 }
 function setCurrentUser(username) {
-  localStorage.setItem("misr-current", username);                 // WRITE
+  localStorage.setItem("misr-current", username);
 }
 function logoutUser() {
-  localStorage.removeItem("misr-current");                        // DELETE
+  localStorage.removeItem("misr-current");
   updateNavForAuth();
 }
 
-// ── show / hide popups ────────────────────────
+// ── show / hide popups
 function doLogin() {
   document.getElementById("loginBox").style.display = "flex";
   clearAuthMsg("login-msg");
@@ -299,7 +80,7 @@ window.onclick = function (event) {
   if (event.target.classList.contains("popup-overlay")) closeAll();
 };
 
-// ── message helpers ───────────────────────────
+
 function showMsg(id, text, ok) {
   var el = document.getElementById(id);
   if (!el) return;
@@ -311,7 +92,6 @@ function clearAuthMsg(id) {
   if (el) el.textContent = "";
 }
 
-// ── SIGN-UP with custom JS validation ─────────
 function doSignupSubmit() {
   var username = (document.getElementById("su-username").value || "").trim();
   var name = (document.getElementById("su-name").value || "").trim();
@@ -319,7 +99,7 @@ function doSignupSubmit() {
   var password = (document.getElementById("su-password").value || "");
   var confirm = (document.getElementById("su-confirm").value || "");
 
-  // ── Custom JS validation (no HTML5) ──────────
+
   if (!username) { showMsg("signup-msg", "Username is required."); return; }
   if (username.length < 3) { showMsg("signup-msg", "Username must be at least 3 characters."); return; }
   if (!name) { showMsg("signup-msg", "Full name is required."); return; }
@@ -336,18 +116,18 @@ function doSignupSubmit() {
   }
 
   users.push({ username: username, password: password, name: name, email: email });
-  saveUsers(users);        // WRITE
-  setCurrentUser(username); // WRITE
+  saveUsers(users);
+  setCurrentUser(username);
   showMsg("signup-msg", "Account created! Redirecting…", true);
   setTimeout(function () { closeAll(); updateNavForAuth(); }, 1200);
 }
 
-// ── LOGIN with custom JS validation ───────────
+// ── LOGIN ─
 function doLoginSubmit() {
   var username = (document.getElementById("li-username").value || "").trim();
   var password = (document.getElementById("li-password").value || "");
 
-  // ── Custom JS validation ──────────────────────
+
   if (!username) { showMsg("login-msg", "Username is required."); return; }
   if (!password) { showMsg("login-msg", "Password is required."); return; }
 
@@ -358,12 +138,12 @@ function doLoginSubmit() {
 
   if (!found) { showMsg("login-msg", "Incorrect username or password."); return; }
 
-  setCurrentUser(username);  // WRITE
+  setCurrentUser(username);
   showMsg("login-msg", "Welcome back, " + found.name + "!", true);
   setTimeout(function () { closeAll(); updateNavForAuth(); }, 1000);
 }
 
-// ── update nav (show username / logout) ───────
+// ── update nav 
 function updateNavForAuth() {
   var user = getCurrentUser();
   var authDiv = document.querySelector(".auth-buttons");
@@ -381,14 +161,11 @@ function updateNavForAuth() {
   }
 }
 
-// run on every page
+
 document.addEventListener("DOMContentLoaded", updateNavForAuth);
 
 
-/* ───────────────────────────────────────────────
-   3. PROFILE  –  avatar, info view/edit
-   Storage key: misr-profile-<username>
-─────────────────────────────────────────────── */
+/* PROFILE */
 
 function inputAvatar(input) {
   var reader = new FileReader();
@@ -400,7 +177,7 @@ function inputAvatar(input) {
     img.style.display = "inline";
     if (initials) initials.style.display = "none";
 
-    // WRITE avatar to storage
+     avatar to storage
     var key = getProfileKey();
     var data = loadProfile(key);
     data.avatar = e.target.result;
@@ -415,17 +192,16 @@ function getProfileKey() {
 }
 
 function loadProfile(key) {
-  return JSON.parse(localStorage.getItem(key) || "{}");  // READ
+  return JSON.parse(localStorage.getItem(key) || "{}");
 }
 
 function saveProfile(key, data) {
-  localStorage.setItem(key, JSON.stringify(data));        // WRITE
+  localStorage.setItem(key, JSON.stringify(data));
 }
 
 function showEdit() {
   document.getElementById("view-info").classList.add("hidden");
   document.getElementById("edit-info").classList.remove("hidden");
-  // pre-fill from storage
   var data = loadProfile(getProfileKey());
   ["name", "email", "gender", "nationality", "dob"].forEach(function (f) {
     var el = document.getElementById("e-" + f);
@@ -434,7 +210,6 @@ function showEdit() {
 }
 
 function saveInfo() {
-  // ── Custom JS validation for profile form ────
   var name = (document.getElementById("e-name").value || "").trim();
   var email = (document.getElementById("e-email").value || "").trim();
   if (!name) { alert("Name cannot be empty."); return; }
@@ -450,9 +225,7 @@ function saveInfo() {
     dob: document.getElementById("e-dob").value
   };
 
-  saveProfile(getProfileKey(), data);  // WRITE
-
-  // update view cells
+  saveProfile(getProfileKey(), data);
   document.getElementById("full-name").textContent = data.name;
   document.getElementById("email").textContent = data.email;
   document.getElementById("gender").textContent = data.gender;
@@ -463,14 +236,11 @@ function saveInfo() {
   document.getElementById("edit-info").classList.add("hidden");
 }
 
-// load profile data on page load
 document.addEventListener("DOMContentLoaded", function () {
-  if (!document.getElementById("view-info")) return;  // not on profile page
+  if (!document.getElementById("view-info")) return;
 
   var key = getProfileKey();
-  var data = loadProfile(key);  // READ
-
-  // auto-fill from user account
+  var data = loadProfile(key);
   var user = getCurrentUser();
   if (user && !data.name) data.name = user.name;
   if (user && !data.email) data.email = user.email;
@@ -488,16 +258,11 @@ document.addEventListener("DOMContentLoaded", function () {
     img.style.display = "inline";
     if (ini) ini.style.display = "none";
   }
-
-  // show booked tickets
   renderBookedTickets();
 });
 
 
-/* ───────────────────────────────────────────────
-   4. TICKETS  –  add/cancel counts + save bookings
-   Storage key: misr-tickets
-─────────────────────────────────────────────── */
+/* TICKETS */
 
 function changeCount(button, amount) {
   var container = button.parentElement;
@@ -509,27 +274,19 @@ function changeCount(button, amount) {
 }
 
 function bookTickets() {
-  // Collect all rows with counts > 0
   var rows = document.querySelectorAll(".tickets-table td[rowspan='3']:last-child, td[rowspan='3']:last-of-type");
   var booked = [];
   var total = 0;
-
-  // Easier: scan all .count spans
   document.querySelectorAll(".count").forEach(function (span, i) {
     var qty = parseInt(span.innerText) || 0;
     if (qty === 0) return;
-
-    // walk up to find museum name
     var td = span.closest("td");
     var row = td ? td.closest("tr") : null;
     var table = td ? td.closest("table") : null;
     if (!table) return;
 
-    // find all museum name cells (first td in rowspan rows)
     var nameCells = table.querySelectorAll("td[rowspan='3']:first-child");
     var museum = nameCells[i] ? nameCells[i].innerText.replace(/\n/g, " ").trim() : "Museum " + (i + 1);
-
-    // price label: sibling td before count td
     var priceTd = td.previousElementSibling;
     var priceLabel = priceTd ? priceTd.innerText.trim() : "";
 
@@ -541,23 +298,22 @@ function bookTickets() {
     return;
   }
 
-  // WRITE bookings to storage
+   bookings to storage
   var existing = JSON.parse(localStorage.getItem("misr-tickets") || "[]");
   booked.forEach(function (b) { existing.push(b); });
   localStorage.setItem("misr-tickets", JSON.stringify(existing));
 
   alert("✅ Tickets booked successfully! You can view them in your Profile.");
 
-  // reset counts
   document.querySelectorAll(".count").forEach(function (s) { s.innerText = "0"; });
 }
 
-// inject "Book All" button on tickets page
+
 document.addEventListener("DOMContentLoaded", function () {
   var table = document.getElementById("ticketsTable");
   if (!table) return;
   var btn = document.createElement("button");
-  btn.textContent = "🎟️ Book Selected Tickets";
+  btn.textContent = " Book Selected Tickets";
   btn.className = "btn-profile";
   btn.style.cssText = "display:block;margin:20px auto;padding:12px 30px;font-size:16px;background:linear-gradient(135deg,#D4AF37,#B8860B);color:#000;border:none;border-radius:8px;cursor:pointer;font-family:Cinzel,serif;";
   btn.onclick = bookTickets;
@@ -565,11 +321,9 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 
-/* ───────────────────────────────────────────────
-   5. BOOKED TICKETS on Profile page
-─────────────────────────────────────────────── */
+/* TICKETS */
 function renderBookedTickets() {
-  var tickets = JSON.parse(localStorage.getItem("misr-tickets") || "[]");  // READ
+  var tickets = JSON.parse(localStorage.getItem("misr-tickets") || "[]");
   var container = document.getElementById("booked-tickets-section");
   if (!container) return;
 
@@ -600,21 +354,19 @@ function renderBookedTickets() {
 function cancelTicket(index) {
   var tickets = JSON.parse(localStorage.getItem("misr-tickets") || "[]");
   tickets.splice(index, 1);
-  localStorage.setItem("misr-tickets", JSON.stringify(tickets));  // WRITE
+  localStorage.setItem("misr-tickets", JSON.stringify(tickets));
   renderBookedTickets();
 }
 
 function clearAllTickets() {
   if (confirm("Clear all booked tickets?")) {
-    localStorage.removeItem("misr-tickets");  // DELETE
+    localStorage.removeItem("misr-tickets");
     renderBookedTickets();
   }
 }
 
 
-/* ───────────────────────────────────────────────
-   6. SEARCH  –  highlight matched cell in tickets table
-─────────────────────────────────────────────── */
+/* SEARCH  */
 document.addEventListener("DOMContentLoaded", function () {
   var searchInput = document.getElementById("tableSearch");
   if (!searchInput) return;
@@ -645,9 +397,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 
-/* ───────────────────────────────────────────────
-   7. CONTACT FORM  –  custom JS validation
-─────────────────────────────────────────────── */
+/* CONTACT FORM */
 document.addEventListener("DOMContentLoaded", function () {
   var form = document.querySelector(".contact-form");
   if (!form) return;
@@ -659,8 +409,6 @@ document.addEventListener("DOMContentLoaded", function () {
     var email = (form.querySelector("#email").value || "").trim();
     var subject = (form.querySelector("#subject").value || "").trim();
     var comment = (form.querySelector("#comment").value || "").trim();
-
-    // ── Custom JS validation ──────────────────────
     if (!name) { showFormError("Please enter your full name."); return; }
     if (name.length < 2) { showFormError("Name must be at least 2 characters."); return; }
     if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
@@ -671,7 +419,6 @@ document.addEventListener("DOMContentLoaded", function () {
       showFormError("Comment must be at least 10 characters."); return;
     }
 
-    // WRITE message to storage
     var msgs = JSON.parse(localStorage.getItem("misr-messages") || "[]");
     msgs.push({ name: name, email: email, subject: subject, comment: comment, date: new Date().toLocaleDateString() });
     localStorage.setItem("misr-messages", JSON.stringify(msgs));
@@ -694,9 +441,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 
-/* ───────────────────────────────────────────────
-   8. ARTIFACT PAGE  –  filter by search query
-─────────────────────────────────────────────── */
+/* ARTIFACT  */
 document.addEventListener("DOMContentLoaded", function () {
   var urlParams = new URLSearchParams(window.location.search);
   var searchQuery = urlParams.get("search");
@@ -711,7 +456,6 @@ document.addEventListener("DOMContentLoaded", function () {
     if (name.includes(term)) {
       group.style.display = "block";
       found = true;
-      // scroll to the first match
       if (!window._scrolledToResult) {
         window._scrolledToResult = true;
         setTimeout(function () { group.scrollIntoView({ behavior: "smooth" }); }, 300);
@@ -726,7 +470,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (noRes) {
       noRes.style.display = "block";
     } else {
-      // create a message if element doesn't exist
+
       var msg = document.createElement("p");
       msg.style.cssText = "text-align:center;color:#D4AF37;padding:40px;font-family:Cinzel,serif;font-size:18px;";
       msg.textContent = 'No results found for "' + searchQuery + '". Try: pyramids, sphinx, luxor, tutankhamun…';
@@ -761,3 +505,4 @@ document.addEventListener("DOMContentLoaded", function () {
 function closeLightbox() {
   document.getElementById("lightbox").style.display = "none";
 }
+
